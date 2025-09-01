@@ -1,0 +1,248 @@
+memchr()	Returns a pointer to the first occurrence of a value in a block of memory
+Example
+Get a pointer to the first byte in a block of memory which contains a specified value:
+
+char myStr[] = "Hello World!";
+char *myPtr = (char*)memchr(myStr, 'o', 12);
+if (myPtr != NULL) {
+  printf("%s", myPtr);
+}
+
+
+memcmp()	Compares two blocks of memory to determine which one represents a larger numeric value
+Example
+Compare two blocks of memory to see which is greater:
+
+char myStr1[] = "ABCD";
+char myStr2[] = "ABCE";
+int cmp = memcmp(myStr1, myStr2, 4);
+
+if (cmp > 0) {
+  printf("%s is greater than %s\n", myStr1, myStr2);
+} else if (cmp < 0) {
+  printf("%s is greater than %s\n", myStr2, myStr1);
+} else {
+  printf("%s is equal to %s\n", myStr1, myStr2);
+}
+
+
+memcpy()	Copies data from one block of memory to another
+memmove()	Copies data from one block of memory to another accounting for the possibility that the blocks of memory overlap
+memset()	Sets all of the bytes in a block of memory to the same value
+
+strcat()	Appends one string to the end of another
+Example
+Concatenate a string:
+
+char myStr[20] = "Hello";
+strcat(myStr, " World!");
+printf("%s", myStr);
+
+
+strchr()	Returns a pointer to the first occurrence of a character in a string
+Example
+Get a pointer to the first occurrence of a character in a string:
+
+char myStr[] = "Hello World";
+char *myPtr = strchr(myStr, 'W');
+if (myPtr != NULL) {
+  printf("%s", myPtr);
+}
+
+
+strcmp()	Compares the ASCII values of characters in two strings to determine which string has a higher value
+Example
+Compare two strings to see which is greater:
+
+char myStr1[] = "ABCD";
+char myStr2[] = "ABCE";
+int cmp = strcmp(myStr1, myStr2);
+if (cmp > 0) {
+  printf("%s is greater than %s\n", myStr1, myStr2);
+} else if (cmp < 0) {
+  printf("%s is greater than %s\n", myStr2, myStr1);
+} else {
+  printf("%s is equal to %s\n", myStr1, myStr2);
+}
+
+
+strcoll()	Compares the locale-based values of characters in two strings to determine which string has a higher value
+
+strcpy()	Copies the characters of a string into the memory of another string
+Example
+Copy data from one string to another:
+
+char str1[] = "Hello World!";
+char str2[30];
+strcpy(str2, str1);
+printf("%s\n", str1);
+printf("%s\n", str2);
+
+
+
+strcspn()	Returns the length of a string up to the first occurrence of one of the specified characters
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+  char myStr[] = "Learn C++, Java and Python!";
+  int pos = strcspn(myStr, ",.!?");
+  printf("%d", pos);
+  return 0;
+} //retorna 9
+
+
+strerror()	Returns a string describing the meaning of an error code
+
+strlen()	Return the length of a string
+char myStr[20] = "Hello World";
+printf("%zu\n", strlen(myStr)); // 11
+printf("%zu\n", sizeof(myStr)); // 20
+
+strncat()	Appends a number of characters from a string to the end of another string
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+  char myStr[20] = "Hello";
+  strncat(myStr, " World!", 8);
+  printf("%s", myStr); // Hola mundo!
+  return 0;
+}
+
+
+strncmp()	Compares the ASCII values of a specified number of characters in two strings to determine which string has a higher value
+Example
+Compare the first 3 characters of two strings:
+
+char myStr1[] = "ABCD";
+char myStr2[] = "ABCE";
+int cmp = strncmp(myStr1, myStr2, 3);
+if (cmp > 0) {
+  printf("%s is greater than %s\n", myStr1, myStr2);
+} else if (cmp < 0) {
+  printf("%s is greater than %s\n", myStr2, myStr1);
+} else {
+  printf("%s is equal to %s\n", myStr1, myStr2);
+} // "ABCD is equal to ABCE"
+
+
+strncpy()	Copies a number of characters from one string into the memory of another string
+Example
+Copy part of the data from one string to another:
+
+char str1[] = "Hello World!";
+char str2[] = "Write code!";
+strncpy(str2, str1, 6);
+printf("%s\n", str1);
+printf("%s\n", str2);
+Definition and Usage
+The strncpy() function copies the first n characters from one string into the memory of another string.
+
+This does not add a null terminating character to the copied data, so make sure that the destination string has a null terminating character somewhere after the copied data.
+
+The strncpy() function is defined in the <string.h> header file.
+
+Note: Make sure that the destination string has enough space for the data or it may start writing into memory that belongs to other variables.
+
+
+
+strpbrk()	Returns a pointer to the first position in a string which contains one of the specified characters
+Example
+Print the part of the string that starts at the first digit:
+
+char myStr[] = "I think 4096 bytes should be enough";
+char *pos = strpbrk(myStr, "0123456789");
+if (pos != NULL) {
+  printf("%s", pos);
+}
+Definition and Usage
+The strpbrk() function searches for the first occurrence in a string of any of the specified characters and returns a pointer to that position in the string.
+
+If none of the characters are found then NULL is returned.
+
+The strpbrk() function is defined in the <string.h> header file.
+
+
+strrchr()	Returns a pointer to the last occurrence of a character in a string
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+  char myStr[] = "Hello World";
+  char *myPtr1 = strchr(myStr, 'o');
+  char *myPtr2 = strrchr(myStr, 'o');
+  if (myPtr1 != NULL) {
+    printf("First: %s\n", myPtr1);
+  }
+  if (myPtr2 != NULL) {
+    printf("Last: %s\n", myPtr2);
+  }
+  return 0;
+} // First: o World
+     Last: orld
+
+
+
+strspn()	Returns the length of a string up to the first character which is not one of the specified characters
+Example
+Measure the length of the string up to the first non-digit:
+
+char myStr[] = "4096 bytes should be enough";
+int pos = strspn(myStr, "0123456789");
+printf("%d", pos);
+Definition and Usage
+The strspn() function searches for the first character in a string which does not match any of the specified characters and returns the length of the string up to that point.
+
+The strspn() function is defined in the <string.h> header file.
+
+Syntax
+strspn(void * str, void * search);
+Parameter Values
+Parameter	Description
+str	Required. The string to search in.
+search	Required. A string containing a set of characters to search for.
+Technical Details
+Returns:	An integer indicating the position of the first character which does not match any of the search characters.
+
+
+strstr()	Returns a pointer to the first occurrence of a string in another string
+Example
+Get a pointer to the first occurrence of a string in another string:
+
+char myStr[] = "The rain in Spain falls mainly on the plains";
+char *myPtr = strstr(myStr, "ain");
+if (myPtr != NULL) {
+  printf("%s", myPtr);
+} // -> ain in Spain falls mainly on the plains
+
+strtok()	Splits a string into pieces using delimiters
+Example
+Separate the words in a sentence by using spaces as a delimiter:
+
+char myStr[] = "Learn C++ at W3schools";
+char * myPtr = strtok(myStr, " ");
+while(myPtr != NULL) {
+  cout << myPtr << "\n";
+  myPtr = strtok(NULL, " ");
+}
+Definition and Usage
+The strtok() function splits a string into multiple pieces (referred to as "tokens") using delimiters.
+
+The first call to strtok() should have a pointer to the string which should be split, while any following calls should use NULL as an argument. Each time the function is called a pointer to a different token is returned until there are no more tokens. At that point each function call returns NULL.
+
+Be aware that this function modifies the original string, replacing delimiters with null terminating characters so that each token can have its own null terminating character.
+
+The strtok() function is defined in the <string.h> header file.
+
+Syntax
+strtok(char * str, const char * delimiters);
+Parameter Values
+Parameter	Description
+str	Required. A pointer to the string to begin splitting. After the first call, pass NULL to this parameter to get more pieces from the same string.
+delimiters	Required. A set of delimiters to search for. A token ends when any one of these characters is found.
+Technical Details
+Returns:	A char type pointer to the position of one of the tokens in the original string, or NULL if there are no more tokens.
+
+
+strxfrm()	Convert characters in a string from ASCII encoding to the encoding of the current locale

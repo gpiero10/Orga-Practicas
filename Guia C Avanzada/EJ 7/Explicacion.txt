@@ -1,0 +1,31 @@
+void swap(int *a, int *b) {
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+int main() {
+    int x = 10, y = 20;
+    swap(&x, &y);
+    printf("x: %d, y: %d\n", x, y);
+}
+
+Ejercicio 7:
+Explicar qué sucederı́a si la firma de la función swap 
+fuera void swap(int a, int b). En ese caso, 
+¿podrı́amos intercambiar los valores de x e y?
+
+No, no compila.
+
+✅ Conclusión final
+Ese código NO funciona porque:
+
+La firma declara parámetros como int, no int*.
+
+Dentro de swap intentás tratarlos como punteros (*a).
+
+El compilador no debería dejarte compilar, y si lo hace con 
+advertencias, al ejecutar vas a tener un segmentation fault.
+
+👉 En resumen: para que *a y *b tengan sentido, la firma tiene 
+que ser void swap(int *a, int *b).

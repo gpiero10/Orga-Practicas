@@ -1,0 +1,71 @@
+Ejercicio 8:
+Pensar si existe una diferencia entre definir un string como str1 o como str2 en el
+siguiente código:
+Snippet 24:
+int main(){
+    char *str1 = "Hola";
+    char str2[] = "Hola";
+    printf("%s\n", str1);
+    printf("%s\n", str2);
+    return 0;
+}
+
+¿Es lo mismo? Parte de la solución es pensar en la memoria. Veremos un poco más
+adelante como se organiza la memoria en C.
+
+1️⃣ char *str1 = "Hola";
+
+"Hola" es un string literal → el compilador lo guarda en la sección de memoria de solo lectura (text/rodata segment).
+
+str1 es un puntero que apunta a ese literal.
+
+Eso significa:
+
+str1 contiene la dirección de "Hola".
+
+El contenido "Hola\0" está en memoria de solo lectura.
+
+⚠️ Si intentás modificarlo (str1[0] = 'h';), el programa hace segmentation fault.
+
+2️⃣ char str2[] = "Hola";
+
+Esto crea un arreglo local en la pila (stack) con espacio para "Hola\0" (5 chars).
+
+Se copia el contenido del literal "Hola" al arreglo.
+
+Eso significa:
+
+str2 es un arreglo de chars mutable.
+
+Podés hacer str2[0] = 'h'; y ahora el arreglo contiene "hola".
+
+Es una copia independiente del literal.
+
+3️⃣ Diferencia de memoria
+
+Supongamos que "Hola" está en 0x1000 (solo lectura).
+
+str1 → puntero que guarda 0x1000.
+
+str2 → arreglo local en stack, digamos en 0x7ffeeabc.
+
+En memoria:
+
+str1 ───► 0x1000: 'H' 'o' 'l' 'a' '\0'   (read-only)
+str2 =   0x7ffeeabc: 'H' 'o' 'l' 'a' '\0'   (en la pila, modificable)
+
+4️⃣ La salida de tu código
+
+Ambos printf("%s\n", ...) imprimen:
+
+Hola
+Hola
+
+
+Pero la diferencia está en dónde viven y si son mutables.
+
+✅ Conclusión:
+
+char *str1 = "Hola"; → puntero a literal en memoria de solo lectura (no se puede modificar).
+
+char str2[] = "Hola"; → arreglo local en la pila con copia del literal (sí se puede modificar).
