@@ -14,19 +14,28 @@ list_t* listNew(type_t t) {
     return l;
 }
 
+funcCopy_t getCopyFunction(type_t t) {
+    switch (t) {
+    case TypeFAT32: return (funcCopy_t) copy_fat32; break;
+    case TypeEXT4: return (funcCopy_t) copy_ext4; break;
+    case TypeNTFS: return (funcCopy_t) copy_ntfs; break;
+    default: return NULL; break;
+    }
+}
+
+funcRm_t getRmFunction(type_t t) {
+    switch (t) {
+    case TypeFAT32: return (funcRm_t) rm_fat32; break;
+    case TypeEXT4: return (funcRm_t) rm_ext4; break;
+    case TypeNTFS: return (funcRm_t) rm_ntfs; break;
+    default: return NULL; break;
+    }
+}
+
+
 void listAddFirst(list_t* l, void* data) {
     node_t* n = malloc(sizeof(node_t));
-    switch(l->type) {
-        case TypeFAT32:
-        n->data = (void*) copy_fat32((fat32_t*) data);
-        break;
-        case TypeEXT4:
-        n->data = (void*) copy_ext4((ext4_t*) data);
-        break;
-        case TypeNTFS:
-        n->data = (void*) copy_ntfs((ntfs_t*) data);
-        break;
-    }
+    n->data = getCopyFunction(l->type)(data);
     n->next = l->first;
     l->first = n;
     l->size++;
@@ -35,8 +44,9 @@ void listAddFirst(list_t* l, void* data) {
 //se asume: i < l->size
 void* listGet(list_t* l, uint8_t i){
     node_t* n = l->first;
-    for(uint8_t j = 0; j < i; j++)
+    for(uint8_t j = 0; j < i; j++){
     n = n->next;
+    }
     return n->data;
 }
 
@@ -50,11 +60,12 @@ void* listRemove(list_t* l, uint8_t i){
         l->first = l->first->next;
     }else{
         node_t* n = l->first;
-        for(uint8_t j = 0; j < i - 1; j++)
+        for(uint8_t j = 0; j < i - 1; j++){
             n = n->next;
-            data = n->next->data;
-            tmp = n->next;
-            n->next = n->next->next;
+        }
+        data = n->next->data;
+        tmp = n->next;
+        n->next = n->next->next;
     }
     free(tmp);
     l->size--;
@@ -63,24 +74,12 @@ void* listRemove(list_t* l, uint8_t i){
 
 void listDelete(list_t* l){
     node_t* n = l->first;
-    
     while(n){
         node_t* tmp = n;
         n = n->next;
-        switch(l->type) {
-            case TypeFAT32:
-            rm_fat32((fat32_t*) tmp->data);
-            break;
-            case TypeEXT4:
-            rm_ext4((ext4_t*) tmp->data);
-            break;
-            case TypeNTFS:
-            rm_ntfs((ntfs_t*) tmp->data);
-            break;
-        }
+        getRmFunction(l->type)(tmp->data);
         free(tmp);
     }
-
     free(l);
 }
 

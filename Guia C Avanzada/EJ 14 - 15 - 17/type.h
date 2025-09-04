@@ -1,4 +1,5 @@
 // type.h
+#include <stdint.h>
 typedef enum e_type {
     TypeFAT32 = 0,
     TypeEXT4 = 1,
@@ -8,6 +9,11 @@ typedef enum e_type {
 typedef int32_t fat32_t;
 typedef int16_t ext4_t; 
 typedef int8_t ntfs_t;
+
+typedef void* (*funcCopy_t)(void*);
+typedef void (*funcRm_t)(void*);
+funcCopy_t getCopyFunction(type_t t);
+funcRm_t getRmFunction(type_t t);
 
 fat32_t* new_fat32();
 ext4_t* new_ext4();
