@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/media/giansalcedo/Disco local/Compu/4TO-CUATRI-CS-COMP/Arquitectura y Organización de Computadores/Practicas/Guia C BASICA",
-      "program": "/media/giansalcedo/Disco local/Compu/4TO-CUATRI-CS-COMP/Arquitectura y Organización de Computadores/Practicas/Guia C BASICA/build/Debug/outDebug",
+      "cwd": "/media/giansalcedo/Disco local/Compu/4TO-CUATRI-CS-COMP/Arquitectura y Organización de Computadores/Practicas/Guia C Avanzada/DEBUGGING",
+      "program": "/media/giansalcedo/Disco local/Compu/4TO-CUATRI-CS-COMP/Arquitectura y Organización de Computadores/Practicas/Guia C Avanzada/DEBUGGING/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
